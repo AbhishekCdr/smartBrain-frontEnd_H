@@ -50,18 +50,32 @@ const ImageLinkForm = () => {
   };
 
   const calculateFaceLocation = (data) => {
-    const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
+    const boxData = data.outputs[0].data.regions;
 
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height,
-    };
+    if (boxData.length === 0) return null;
+    else if (boxData.length === 1) {
+      const clarifaiFace =
+        data.outputs[0].data.regions[0].region_info.bounding_box;
+      return {
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - clarifaiFace.right_col * width,
+        bottomRow: height - clarifaiFace.bottom_row * height,
+      };
+    } else {
+      return boxData.map((box) => {
+        const clarifaiFace = box.region_info.bounding_box;
+        return {
+          leftCol: clarifaiFace.left_col * width,
+          topRow: clarifaiFace.top_row * height,
+          rightCol: width - clarifaiFace.right_col * width,
+          bottomRow: height - clarifaiFace.bottom_row * height,
+        };
+      });
+    }
   };
 
   const displayFaceBox = (box) => {
@@ -121,15 +135,30 @@ const ImageLinkForm = () => {
           src={imageResult}
           alt=""
         />
-        <div
-          className="bounding-box"
-          style={{
-            top: boxStyle.topRow,
-            right: boxStyle.rightCol,
-            bottom: boxStyle.bottomRow,
-            left: boxStyle.leftCol,
-          }}
-        ></div>
+        {!Array.isArray(boxStyle) ? (
+          <div
+            className="bounding-box"
+            style={{
+              top: boxStyle.topRow,
+              right: boxStyle.rightCol,
+              bottom: boxStyle.bottomRow,
+              left: boxStyle.leftCol,
+            }}
+          ></div>
+        ) : (
+          boxStyle.map((box, index) => (
+            <div
+              className="bounding-box"
+              key={index} // it's safe to use index as key, the Data is static,
+              style={{
+                top: box.topRow,
+                right: box.rightCol, // reordering the list or filtering is not going to happen.
+                bottom: box.bottomRow,
+                left: box.leftCol,
+              }}
+            ></div>
+          ))
+        )}
       </div>
     </div>
   );
