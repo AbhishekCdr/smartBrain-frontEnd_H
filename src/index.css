@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .max-container {
+    max-width: 1440px;
+    padding-inline: 2rem;
+    margin: 0 auto;
+  }
+
+  .bounding-box {
+    position: absolute;
+    box-shadow: 0 0 0 3px #149df2 inset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
+
+body {
+  @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600 font-mono;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #6e6e6e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a25ca;
+}
