@@ -15,9 +15,9 @@ const ImageLinkForm = () => {
   let localEntries = loadUser.entries;
 
   const MODEL_ID = "face-detection";
-  const PAT = import.meta.env.VITE_CLARIFAI_PAT;
-  const USER_ID = import.meta.env.VITE_CLARIFAI_USER_ID;
-  const APP_ID = import.meta.env.VITE_CLARIFAI_APP_ID;
+  const PAT = "55826670f3cc490692b6a7f7fef16b44";
+  const USER_ID = "clarifai";
+  const APP_ID = "main";
   const IMAGE_URL = imageUrl;
 
   const raw = JSON.stringify({
