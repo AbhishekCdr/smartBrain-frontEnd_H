@@ -58,7 +58,7 @@ const Navigation = () => {
                 className="px-4 text-lg text-gray-100 hover:text-gray-300"
                 onClick={removeImgHandler}
               >
-                Rigster
+                Register
               </Link>
             </>
           )}
